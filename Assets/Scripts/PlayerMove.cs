@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
@@ -14,7 +12,7 @@ public class PlayerMove : MonoBehaviour
     {
         m_Rigidbody = GetComponent<Rigidbody2D>();
     }
-    // Update is called once per frame
+
     void FixedUpdate()
     {
         horizontalInput = Input.GetAxis("Horizontal");

@@ -1,11 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
-public class Main : MonoBehaviour
-{
 
+public class Fish : MonoBehaviour
+{
     public GameObject[] FishSpawn;
     public int Fishes;
 
@@ -16,10 +15,10 @@ public class Main : MonoBehaviour
 
     public int FishCount;
 
-    public int Timer = 30;
-
+    public int Timer = 180;
 
     public TextMeshProUGUI FishCountText;
+    public TextMeshProUGUI FishCountText2;
 
     public TextMeshProUGUI CountDownText;
 
@@ -27,13 +26,10 @@ public class Main : MonoBehaviour
 
     public GameObject GameOverMenu;
 
-
-    // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(Countdown());
         StartCoroutine(FishSpawning());
-
+        StartCoroutine(Countdown());
     }
 
     // Update is called once per frame
@@ -54,24 +50,14 @@ public class Main : MonoBehaviour
                 FishCount++;
                 FishCountText.text = FishCount.ToString();
             }
-
-            if(Timer == 0)
-            {
-                GameOverMenu.SetActive(true);
-            }
         }
-    }
 
-    IEnumerator FishSpawning()
-    {
-        yield return new WaitForSeconds(1f);
-        FishSpawned();
-    }
+        if(Timer == 0)
+        {
+            GameOverMenu.SetActive(true);
+            FishCountText2.text = FishCount.ToString() + " Fishes!";
 
-    public void FishSpawned()
-    {
-        FishSpawnCount = Random.Range(0, 6);
-        FishSpawn[FishSpawnCount].SetActive(true);
+        }
     }
 
     IEnumerator Countdown()
@@ -80,6 +66,18 @@ public class Main : MonoBehaviour
         Timer = Timer - 1;
         CountDownText.text = Timer.ToString();
         StartCoroutine(Countdown());
+
+    }
+    IEnumerator FishSpawning()
+    {
+        yield return new WaitForSeconds(1f);
+        FishSpawned();
+    }
+
+    void FishSpawned()
+    {
+        FishSpawnCount = Random.Range(0, 6);
+        FishSpawn[FishSpawnCount].SetActive(true);
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
@@ -92,7 +90,7 @@ public class Main : MonoBehaviour
 
     public void OnTriggerExit2D(Collider2D collision)
     {
-        if(collision.tag == "FishSpawn")
+        if (collision.tag == "FishSpawn")
         {
             InTrigger = false;
         }
@@ -101,17 +99,17 @@ public class Main : MonoBehaviour
     public void Continue()
     {
         FishCollected.SetActive(false);
-        FishesImage[0].SetActive(false);
         FishesImage[1].SetActive(false);
-        FishesImage[2].SetActive(false);
+        FishesImage[0].SetActive(false);
         FishesImage[3].SetActive(false);
         FishesImage[4].SetActive(false);
         FishesImage[5].SetActive(false);
         FishesImage[6].SetActive(false);
+        FishesImage[2].SetActive(false);
     }
 
     public void NewGame()
     {
-        SceneManager.LoadScene("GameplayScene");
+        SceneManager.LoadScene("Gameplay");
     }
 }
